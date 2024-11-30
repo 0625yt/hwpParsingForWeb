@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/commons-codec-1.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/commons-collections4-4.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/commons-compress-1.18.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/DazzleCommon.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/hwplib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/jackson-core-2.17.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/ooxml-schemas-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/org.eclipse.equinox.common_3.10.100.v20180827-1235.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/org.eclipse.jface_3.14.100.v20180828-0836.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/org.eclipse.osgi_3.13.100.v20180827-1536.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/org.eclipse.swt.win32.win32.x86_3.108.0.v20180904-1901.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/poi-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/poi-excelant-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/poi-ooxml-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/poi-ooxml-schemas-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/poi-scratchpad-4.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/xmlbeans-3.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/yt001/git/repository/HwpDocumentParsing/src/lib/xmpbox-2.0.23.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
