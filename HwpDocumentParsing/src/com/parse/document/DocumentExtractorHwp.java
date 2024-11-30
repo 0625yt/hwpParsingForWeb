@@ -148,7 +148,7 @@ public class DocumentExtractorHwp {
 	 * @param check
 	 */
 	public void processElementsFromContext(IProgressMonitor monitor, DataExtractContext context, String title, boolean check) {
-	    // Retrieve the list of AbstractElement[] from context
+
 	    List<AbstractElement[]> elementArrays = (List<AbstractElement[]>) context.get("Elements.Hwp." + title);
 
 	    if (elementArrays == null || elementArrays.isEmpty()) {
@@ -158,11 +158,9 @@ public class DocumentExtractorHwp {
 
 	    int fileIndex = 1; // For creating unique file names
 
-	    // Iterate over the list of AbstractElement arrays
 	    for (AbstractElement[] elementsArray : elementArrays) {
 	        JSONArray jsonArray = new JSONArray();
 
-	        // Process each AbstractElement in the array
 	        for (AbstractElement element : elementsArray) {
 	            JSONObject jsonObject = convertElementToJson(element); // Convert to JSON
 	            jsonArray.add(jsonObject);

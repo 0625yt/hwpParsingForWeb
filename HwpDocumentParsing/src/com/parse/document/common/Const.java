@@ -84,4 +84,5 @@ public class Const {
 	public static final String SecureTitle[] = {"가.", "나.", "다.", "라.","마."};
 	public static final String SecureSubTitle[] = {"①", "②", "③", "④","⑤"};
 	public static final String DEFAULT_PATH = "C:\\Temp\\document";
+	public static final String JSON_UPLOAD_PATH = "C:\\Temp\\";
 }
