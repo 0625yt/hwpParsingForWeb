@@ -168,9 +168,10 @@ public class DocumentExtractorHwp {
 
 	        // Save each array as a JSON file
 	        String uniqueFileName = generateUniqueFileName("output_" + title + "_elements" + fileIndex, "json");
-	        saveJsonToFile(jsonArray, "C:\\Temp\\" + uniqueFileName);
+	        saveJsonToFile(jsonArray, Const.JSON_UPLOAD_PATH + uniqueFileName);
 	        fileIndex++;
 	    }
+	    
 	}
 	
 	public JSONObject convertElementToJson(AbstractElement element) {
