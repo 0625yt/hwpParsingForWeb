@@ -21,17 +21,21 @@ import kr.dogfoot.hwplib.object.bodytext.paragraph.text.HWPCharControlInline;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.text.HWPCharNormal;
 import kr.dogfoot.hwplib.object.etc.HWPString;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
-import java.util.Stack;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
-import org.apache.poi.ss.usermodel.Footer;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import com.parse.document.DataExtractContext;
 import com.parse.document.common.Const;
 import com.parse.document.common.HwpUtil;
 import com.parse.document.common.Util;
@@ -43,7 +47,6 @@ import com.parse.document.common.factory.ElementFactorySabang;
 import com.parse.document.common.factory.ElementFactorySanbang;
 import com.parse.document.common.parse.AbstractElement;
 import com.parse.document.common.parse.CellElement;
-import com.parse.document.common.parse.ContainerElement;
 import com.parse.document.common.parse.Outline;
 import com.parse.document.common.parse.ParagraphElement;
 import com.parse.document.common.parse.RowElement;
@@ -59,7 +62,6 @@ import com.parse.document.common.parse.TableElement;
 public class DocumentExtractorHwp {
 
 	private ElementFactory elementFactory; // ElementFactory 객체를 관리하는 변수
-	private TableData tableData; // TableData 객체를 저장할 멤버 변수 추가
 	private List<TableData> tableDataList = new ArrayList<>(); // TableData 객체 리스트를 저장할 변수 추가
 
 	/**
@@ -128,7 +130,6 @@ public class DocumentExtractorHwp {
 	    
 	    // 같은 키로 모든 파일에 대한 AbstractElement 배열 리스트를 context에 저장
 	    context.put("Elements.Hwp." + title, fileElementArrays);
-	    // System.out.println("Set Key >> Elements.Hwp." + title);
 	    
 	    if (!multipleCheck) {
 	        makeOutlines(context, title, fileElementArrays);
@@ -137,6 +138,74 @@ public class DocumentExtractorHwp {
 	    }
 
 	    return fileElementArrays;
+	}
+	
+	/**
+	 * 파싱 결과를 Json 파일로 업로드
+	 * @param monitor
+	 * @param context
+	 * @param title
+	 * @param check
+	 */
+	public void processElementsFromContext(IProgressMonitor monitor, DataExtractContext context, String title, boolean check) {
+	    // Retrieve the list of AbstractElement[] from context
+	    List<AbstractElement[]> elementArrays = (List<AbstractElement[]>) context.get("Elements.Hwp." + title);
+
+	    if (elementArrays == null || elementArrays.isEmpty()) {
+	        System.out.println("No elements found in context for title: " + title);
+	        return;
+	    }
+
+	    int fileIndex = 1; // For creating unique file names
+
+	    // Iterate over the list of AbstractElement arrays
+	    for (AbstractElement[] elementsArray : elementArrays) {
+	        JSONArray jsonArray = new JSONArray();
+
+	        // Process each AbstractElement in the array
+	        for (AbstractElement element : elementsArray) {
+	            JSONObject jsonObject = convertElementToJson(element); // Convert to JSON
+	            jsonArray.add(jsonObject);
+	        }
+
+	        // Save each array as a JSON file
+	        String uniqueFileName = generateUniqueFileName("output_" + title + "_elements" + fileIndex, "json");
+	        saveJsonToFile(jsonArray, "C:\\Temp\\" + uniqueFileName);
+	        fileIndex++;
+	    }
+	}
+	
+	public JSONObject convertElementToJson(AbstractElement element) {
+	    JSONObject jsonObject = new JSONObject();
+	    jsonObject.put("no", element.getNo());
+	    jsonObject.put("contentsType", element.getContentsType() != null ? element.getContentsType().toString() : null);
+	    jsonObject.put("children", getChildrenAsJsonArray(element));
+	    jsonObject.put("text", element.getText());
+	    jsonObject.put("elementType", element.getElementType() != null ? element.getElementType().toString() : null);
+	    return jsonObject;
+	}
+
+	private JSONArray getChildrenAsJsonArray(AbstractElement element) {
+	    JSONArray childrenArray = new JSONArray();
+	    for (AbstractElement child : element.getChildren()) {
+	        childrenArray.add(convertElementToJson(child));
+	    }
+	    return childrenArray;
+	}
+	
+	private String generateUniqueFileName(String baseName, String extension) {
+		String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+	    String uuid = UUID.randomUUID().toString();
+	    return String.format("%s_%s_%s.%s", baseName, timestamp, uuid, extension);
+	}
+	
+	public void saveJsonToFile(JSONArray jsonArray, String filePath) {
+	    try (FileWriter fileWriter = new FileWriter(filePath)) {
+	        fileWriter.write(jsonArray.toJSONString());
+	        System.out.println("JSON data has been saved to: " + filePath);
+		} catch (IOException e) {
+	        throw new RuntimeException("Failed to save JSON to file", e);
+	    }
 	}
 
 	/**
@@ -158,9 +227,6 @@ public class DocumentExtractorHwp {
 
 	    // 새 계층 구조의 자식 요소들을 elementList에 추가
 	    elementList.addAll(root.getChildren());
-
-	    // 계층 구조가 제대로 만들어졌는지 확인하기 위해 루트의 자식들 확인
-	    System.out.println("Root element has " + root.getChildren().size() + " children.");
 	}
 	
 	/**
