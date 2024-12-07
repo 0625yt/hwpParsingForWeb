@@ -174,6 +174,38 @@ public class DocumentExtractorHwp {
 	    
 	}
 	
+	public void printElement(DataExtractContext context, String title) {
+		List<AbstractElement[]> elementArrays = (List<AbstractElement[]>) context.get("Elements.Hwp." + title);
+
+		for (AbstractElement[] elementsArray : elementArrays) {
+			for (AbstractElement element : elementsArray) {
+				printElementRecursive(element, 0);
+			}
+		}
+
+	}
+	
+	private void printElementRecursive(AbstractElement element, int depth) {
+		if (element == null) {
+			return;
+		}
+
+		// 들여쓰기 및 현재 요소 정보 출력
+		String indent = "  ".repeat(depth);
+		//System.out.println(indent + "[Depth " + depth + "] Element:");
+		System.out.println(indent + "  Text: " + element.getText());
+		//System.out.println(indent + "  No: " + element.getNo());
+		//System.out.println(
+		//		indent + "  ContentsType: " + (element.getContentsType() != null ? element.getContentsType() : "null"));
+		//System.out.println(
+		//		indent + "  ElementType: " + (element.getElementType() != null ? element.getElementType() : "null"));
+
+		// 자식 요소 재귀적으로 출력
+		for (AbstractElement child : element.getChildren()) {
+			printElementRecursive(child, depth + 1);
+		}
+	}
+	
 	public JSONObject convertElementToJson(AbstractElement element) {
 	    JSONObject jsonObject = new JSONObject();
 	    jsonObject.put("no", element.getNo());

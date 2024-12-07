@@ -68,10 +68,10 @@ public abstract class FileDataExtractorHwp extends FileDataExtractor {
 
 		if (hwpFiles != null) {
 
-			for (int fileIndex = 0; fileIndex < hwpFiles.length; fileIndex++) {
+	//		for (int fileIndex = 0; fileIndex < hwpFiles.length; fileIndex++) {
 				List<List<Paragraph>> allFilesParagraphs = new ArrayList<>();
 			    
-				HWPFile hwpFile = hwpFiles[fileIndex];
+				HWPFile hwpFile = hwpFiles[0];
 			    DataExtractContext fileContext = new DataExtractContext();
 			    
 			    if (hwpFile != null) {
@@ -88,14 +88,16 @@ public abstract class FileDataExtractorHwp extends FileDataExtractor {
 			        allFilesParagraphs.add(paragraphs); 
 			        documentExtractor.extractElement(monitor, fileContext, title, allFilesParagraphs, false);
 
-			        int progressPercentage = ((fileIndex + 1) * 100) / hwpFiles.length;
-			        System.out.println("Progress: " + progressPercentage + "% (" + (fileIndex + 1) + "/" + hwpFiles.length + ")");
+			        int progressPercentage = ((0 + 1) * 100) / hwpFiles.length;
+			        System.out.println("Progress: " + progressPercentage + "% (" + (- + 1) + "/" + hwpFiles.length + ")");
 
 			        if (toJson) {
 						documentExtractor.processElementsFromContext(monitor, fileContext, title, false);
+					}else {
+						documentExtractor.printElement(fileContext, title);
 					}
 			    }
-			}
+		//	}
 
 		}
 	}
