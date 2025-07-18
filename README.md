@@ -1,83 +1,98 @@
-HwpParsingForWeb
-HwpParsingForWeb 프로젝트는 한글(HWP) 문서의 데이터를 파싱하고, 이를 웹 애플리케이션에서 활용할 수 있도록 변환하는 Java 기반의 도구입니다. 이 프로젝트는 HWP 문서의 구조적 요소(예: 문단, 테이블, 섹션 등)를 추출하여 JSON 형식으로 변환하거나, 다른 형식으로 데이터를 처리할 수 있게 돕습니다. HWP 파일의 데이터를 웹 애플리케이션에서 사용하려는 목적에 유용하게 활용될 수 있습니다.
 
-기술 스택 및 구성
-Java: 이 프로젝트는 Java로 개발되었으며, HWP 파일을 파싱하는 데 사용됩니다.
+# HwpParsingForWeb
 
-HwpLib (kr.dogfoot.hwplib): HWP 파일 형식을 읽고 처리하는 라이브러리입니다. HWP 파일의 구조적 요소들을 파싱하고, 이를 객체로 변환하는 데 사용됩니다.
+`HwpParsingForWeb` 프로젝트는 한글(HWP) 문서를 파싱하고, 문서 내 데이터를 구조적으로 추출하여 웹 애플리케이션에서 활용할 수 있도록 변환하는 Java 기반의 도구입니다. 이 프로젝트는 HWP 파일을 읽고, 문서의 다양한 요소들(문단, 테이블, 섹션 등)을 파싱하여 JSON 형식으로 변환하거나 다른 형식으로 데이터를 처리할 수 있게 도와줍니다.
 
-JSON.simple: 데이터 처리 후 JSON 형식으로 변환하는 데 사용됩니다.
+---
 
-Eclipse / IntelliJ IDEA: Java IDE에서 프로젝트를 설정하고 실행할 수 있습니다.
+## 프로젝트 목표
 
-프로젝트 구조
-1. DataExtractContext.java
-이 클래스는 문서 파싱 중에 필요한 데이터를 저장하고 관리하는 역할을 합니다. Map<String, Object> 자료구조를 이용하여 데이터를 저장하고, 키를 사용하여 데이터를 추출하는 메소드들이 포함되어 있습니다.
+HWP 파일은 한국에서 널리 사용되는 문서 형식으로, 웹 기반 애플리케이션에서 이를 처리하고 데이터를 활용하는 데 어려움이 있을 수 있습니다. **HwpParsingForWeb** 프로젝트는 HWP 파일을 웹에서 쉽게 사용할 수 있는 데이터 형식으로 변환하는 것을 목표로 합니다.
 
-주로 데이터를 임시로 저장하고, 후속 작업에서 쉽게 접근할 수 있도록 도와주는 컨텍스트 클래스입니다.
+- **문서 구조 분석**: HWP 파일을 읽고 섹션, 문단, 테이블 등을 구조적으로 파싱.
+- **데이터 추출 및 변환**: 파싱된 데이터를 JSON 형식으로 변환하여 웹 애플리케이션에서 활용.
+- **웹 통합**: 추출된 데이터를 다른 시스템과 연동할 수 있도록 JSON, XML 등의 형식으로 출력.
 
-2. DocumentExtractorHwp.java
-이 클래스는 HWP 문서에서 문단, 테이블, 섹션 등과 같은 구조적 요소를 추출하는 핵심적인 클래스로, 문서의 각 요소를 파싱하여 AbstractElement 객체로 변환합니다.
+---
 
-HwpLib 라이브러리를 활용하여 각 문서의 컨트롤들을 읽고, 필요한 데이터 형식으로 변환합니다.
+## 기술 스택
 
-이 클래스의 주요 기능은 HWP 파일을 읽고, 문서의 구조적 요소들을 처리하여 추상화된 형태로 변환하는 것입니다.
+- **Java**: 문서 파싱과 데이터 처리의 핵심 언어.
+- **HwpLib (kr.dogfoot.hwplib)**: HWP 파일을 파싱하는 Java 라이브러리.
+- **JSON.simple**: JSON 형식으로 데이터를 변환.
+- **Eclipse / IntelliJ IDEA**: Java IDE에서 프로젝트 설정 및 실행.
 
-3. FileDataExtractorHwp.java
-이 클래스는 HWP 파일을 실제로 읽고 데이터를 추출하는 기능을 제공합니다. HWP 파일을 FileInputStream으로 열고, 이를 분석하여 DataExtractContext에 데이터를 저장합니다.
+---
 
-Pattern과 Matcher를 사용하여 정규 표현식으로 텍스트 데이터를 필터링하거나 추출하는 작업을 수행합니다.
+## 프로젝트 구조
 
-HWP 파일을 파싱하는 데 중요한 역할을 하며, 파일의 섹션, 문단, 테이블 등을 처리하는 작업을 합니다.
+### 주요 클래스
 
-4. common 폴더
-common 폴더는 다양한 유틸리티 클래스와 공통된 기능을 제공하는 파일들로 구성되어 있습니다.
+1. **`DataExtractContext.java`**  
+   문서 파싱 중 데이터를 관리하는 컨텍스트 클래스입니다. `Map<String, Object>`를 사용하여 데이터를 저장하고, 후속 작업에서 쉽게 접근할 수 있도록 합니다.
 
-Const.java, HwpUtil.java, Util.java 등 다양한 유틸리티 클래스들이 포함되어 있으며, 이 클래스들은 데이터 처리, 파일 관리, 추출된 데이터를 변환하는 데 필요한 여러 공통적인 작업을 수행합니다.
+2. **`DocumentExtractorHwp.java`**  
+   HWP 파일에서 문단, 테이블, 섹션 등의 요소를 추출하는 핵심 클래스입니다. 추출된 데이터를 `AbstractElement`로 변환하여 후속 처리할 수 있도록 합니다.
 
-주요 기능
-1. HWP 파일 파싱
-HWP 문서를 로드하고, 문서 내 다양한 섹션(페이지, 문단, 테이블 등)을 파싱하여 필요한 데이터만을 추출할 수 있습니다.
+3. **`FileDataExtractorHwp.java`**  
+   HWP 파일을 실제로 읽고, 이를 분석하여 데이터로 변환하는 클래스입니다. HWP 파일을 `FileInputStream`으로 열고 데이터를 추출합니다.
 
-추출된 데이터는 후속 작업에서 사용할 수 있도록 구조적으로 변환됩니다.
+4. **`common` 폴더**  
+   다양한 유틸리티 클래스와 공통 기능을 제공하는 파일들로 구성되어 있습니다. `HwpUtil`, `Util`, `Const` 등 데이터 처리와 관련된 여러 유틸리티 메소드들이 포함됩니다.
 
-2. 문서 요소 추출
-문서에서 다양한 요소를 추출하여 AbstractElement 형식으로 반환합니다.
+---
 
-예를 들어, ParagraphElement, TableElement, RowElement, CellElement 등의 클래스를 사용하여 문서 내 문단 및 테이블을 구조적으로 추출할 수 있습니다.
+## 주요 기능
 
-3. JSON 형식으로 변환
-추출된 데이터를 JSON 형식으로 변환하여 웹 애플리케이션에서 활용할 수 있도록 합니다.
+### 1. **HWP 파일 파싱**
 
-JSON 형식으로 변환된 데이터는 웹에서 쉽게 활용할 수 있으며, 다른 시스템과의 연동을 용이하게 합니다.
+HWP 문서에서 다양한 요소(문단, 테이블 등)를 추출하고 이를 웹 애플리케이션에서 사용할 수 있는 데이터 형식으로 변환합니다.
 
-4. 진행 상황 모니터링
-IProgressMonitor를 사용하여 파싱 작업의 진행 상황을 모니터링할 수 있습니다.
+### 2. **문서 요소 추출**
 
-긴 작업을 진행할 때 사용자는 작업 진행률을 확인할 수 있습니다.
+HWP 파일에서 섹션, 문단, 테이블 등을 추출하여 구조적으로 변환합니다. `AbstractElement` 객체로 변환하여 후속 처리가 가능하게 만듭니다.
 
-설치 방법
-1. GitHub에서 프로젝트 클론하기
-bash
-복사
+### 3. **JSON 형식으로 변환**
+
+문서에서 추출된 데이터를 JSON 형식으로 변환하여 웹 애플리케이션에서 쉽게 활용할 수 있도록 제공합니다.
+
+### 4. **진행 상황 모니터링**
+
+`IProgressMonitor`를 사용하여 데이터 추출 작업의 진행 상황을 실시간으로 모니터링할 수 있습니다.
+
+---
+
+## 설치 방법
+
+### 1. GitHub에서 프로젝트 클론하기
+
+```bash
 git clone https://github.com/0625yt/hwpParsingForWeb.git
-2. 필요한 라이브러리 설치
-이 프로젝트는 kr.dogfoot.hwplib 라이브러리를 사용하므로, Maven이나 Gradle을 통해 이 라이브러리를 포함해야 합니다. pom.xml 또는 build.gradle 파일에 다음 의존성을 추가합니다.
+```
 
-xml
-복사
+### 2. 필요한 라이브러리 추가
+
+프로젝트의 의존성 라이브러리를 설정해야 합니다. `pom.xml` 또는 `build.gradle`에 아래와 같은 의존성을 추가합니다.
+
+```xml
 <dependency>
     <groupId>kr.dogfoot</groupId>
     <artifactId>hwplib</artifactId>
     <version>1.0.1</version>
 </dependency>
-3. Java IDE에서 프로젝트 열기
-IntelliJ IDEA나 Eclipse와 같은 Java IDE에서 프로젝트를 열고, 필요한 라이브러리를 설정합니다.
+```
 
-사용법
-1. HWP 파일 파싱 예제
-java
-복사
+### 3. IDE에서 프로젝트 열기
+
+IntelliJ IDEA 또는 Eclipse에서 프로젝트를 열고, 필요한 라이브러리를 설정합니다.
+
+---
+
+## 사용법
+
+### 1. HWP 파일 파싱 예제
+
+```java
 import com.parse.document.FileDataExtractorHwp;
 
 public class HwpParsingExample {
@@ -95,11 +110,11 @@ public class HwpParsingExample {
         // 예: 추출된 데이터를 JSON 형식으로 변환 후 출력
     }
 }
-2. 추출된 데이터를 JSON 형식으로 변환
-추출된 데이터를 JSONObject 형태로 변환하여, 웹 애플리케이션에서 쉽게 사용할 수 있도록 합니다.
+```
 
-java
-복사
+### 2. 추출된 데이터를 JSON 형식으로 변환
+
+```java
 import org.json.simple.JSONObject;
 
 public class DataToJsonExample {
@@ -112,12 +127,25 @@ public class DataToJsonExample {
         System.out.println(dataJson.toJSONString());
     }
 }
-기여
-이 프로젝트는 오픈소스로 제공됩니다. 프로젝트에 기여하고 싶으신 분들은 아래 방법에 따라 기여할 수 있습니다:
+```
 
-이 프로젝트를 Fork 합니다.
+---
 
-변경 사항을 로컬에서 적용한 후 Pull Request를 보내주세요.
+## 기여 방법
 
-라이센스
-이 프로젝트는 MIT 라이센스를 따릅니다. 자세한 사항은 MIT 라이센스 페이지에서 확인할 수 있습니다.
+이 프로젝트는 오픈소스로 제공되며, 여러분의 기여를 환영합니다! 기여 방법은 아래와 같습니다:
+
+1. 프로젝트를 **Fork** 합니다.
+2. 로컬에서 변경 사항을 적용하고, **Pull Request**를 보냅니다.
+
+---
+
+## 라이센스
+
+이 프로젝트는 **MIT 라이센스** 하에 배포됩니다. 자세한 사항은 [MIT 라이센스 페이지](https://opensource.org/licenses/MIT)에서 확인할 수 있습니다.
+
+---
+
+### 프로젝트 포트폴리오로 사용하기
+
+이 프로젝트는 Java 기반의 파일 파싱과 데이터 변환 기술을 보여주는 훌륭한 예시입니다. 이 프로젝트를 포트폴리오에 포함시키면, HWP 파일을 다루는 기술적 역량을 강조할 수 있습니다. 또한, 웹 애플리케이션에서의 데이터 활용 방식에 대해 깊은 이해를 보여줄 수 있습니다.
